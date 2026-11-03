@@ -8,8 +8,27 @@ const FavoritesContext = createContext({
 
 // 2. providing the context via the function component, which updates the context values
 function FavoritesContextProvider(props) {
-
   const [userFavorites, setUserFavorites] = useState([]);
+
+  // 5. add to favorites based on the previous state 
+  function addFavoriteHandler(favoriteMeetup) {
+    setUserFavorites((prevUserFavorites) => {
+      // "pushing" the new object containing the added favorite
+      return prevUserFavorites.concat(favoriteMeetup);
+    });
+  }
+
+  // 6. filterig out the item if the meetup.id matches the parameter
+  function removeFavoriteHandler(meetupId) {
+    setUserFavorites(prevUserFavorites => {
+      return prevUserFavorites.filter(meetup => meetup.id !== meetupId);
+    });
+  }
+
+  // 7. checking if the returned item is = to the parameter
+  function itemIsFavoriteHandler(meetupId) {
+    return userFavorites.some(meetup => meetup.id === meetupId);
+  }
 
   // 4. updating context values with the help of useState (passing it as a value prop) 
   const context = {
