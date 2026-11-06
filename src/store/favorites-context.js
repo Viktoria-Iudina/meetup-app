@@ -3,11 +3,14 @@ import { createContext, useState } from "react";
 // 1. initializing context with an epmty object as its initial value set to zero because by default we dont have any favorites
 const FavoritesContext = createContext({
   favorites: [],
-  totalFavorites: 0
+  totalFavorites: 0,
+  addFavorite: (favoriteMeetup) => {},
+  removeFavorite: (meetupId) => {},
+  itemIsFavorite: (meetupId) => {}
 });
 
 // 2. providing the context via the function component, which updates the context values
-function FavoritesContextProvider(props) {
+export function FavoritesContextProvider(props) {
   const [userFavorites, setUserFavorites] = useState([]);
 
   // 5. add to favorites based on the previous state 
@@ -33,7 +36,11 @@ function FavoritesContextProvider(props) {
   // 4. updating context values with the help of useState (passing it as a value prop) 
   const context = {
     favorites: userFavorites,
-    totalFavorites: userFavorites.length
+    totalFavorites: userFavorites.length,
+    // adding functions to context to all interested components
+    addFavorite: addFavoriteHandler,
+    removeFavorite: removeFavoriteHandler,
+    itemIsFavorite: itemIsFavoriteHandler
   };
 
   // 3. the context component will wrap all other components which are concerned by updating the favorites values
@@ -41,3 +48,5 @@ function FavoritesContextProvider(props) {
     {props.children}
   </FavoritesContext.Provider>
 }
+
+export default FavoritesContext;
