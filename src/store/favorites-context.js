@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 // 1. initializing context with an epmty object as its initial value set to zero because by default we dont have any favorites
 const FavoritesContext = createContext({
@@ -9,9 +9,25 @@ const FavoritesContext = createContext({
   itemIsFavorite: (meetupId) => {}
 });
 
+
 // 2. providing the context via the function component, which updates the context values
 export function FavoritesContextProvider(props) {
-  const [userFavorites, setUserFavorites] = useState([]);
+  // const [userFavorites, setUserFavorites] = useState([]);
+  const [userFavorites, setUserFavorites] = useState(() => {
+    try {
+      const saved = localStorage.getItem('favorites');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+  // console.log(localStorage.getItem('favorites'));
+
+  useEffect(() => {
+    localStorage.setItem('favorites', JSON.stringify(userFavorites));
+  }, [userFavorites]);
+
+
 
   // 5. add to favorites based on the previous state 
   function addFavoriteHandler(favoriteMeetup) {
