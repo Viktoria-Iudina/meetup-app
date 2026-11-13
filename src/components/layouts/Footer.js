@@ -10,6 +10,8 @@ function Footer() {
             A non-profit React JS course project: browse meetups, add new ones
             and keep your favorites.
           </p>
+          <br />
+          <p>Course credit: Maximilian Schwarzmüller</p>
         </section>
 
         <section>
