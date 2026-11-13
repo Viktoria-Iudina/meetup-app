@@ -38,7 +38,7 @@ function AllMeetupsPage() {
 
   return (
     <section>
-      <h1 className={classes.title}>All Meetups</h1>
+      <h1>All Meetups</h1>
       <MeetupList meetups={loadedMeetups} />
     </section>
   );
