@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import MeetupList from '../components/meetups/MeetupList';
-import classes from '../components/meetups/MeetupList.module.css';
 
 function AllMeetupsPage() {
 
