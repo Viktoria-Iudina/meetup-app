@@ -5,6 +5,7 @@ function AllMeetupsPage() {
 
   const [isLoading, setIsLoading] = useState(true);
   const [loadedMeetups, setLoadedMeetups] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     setIsLoading(true);
@@ -31,6 +32,15 @@ function AllMeetupsPage() {
       });
   }, []);
 
+  const query = searchTerm.trim().toLowerCase();
+
+  const filteredMeetups = loadedMeetups.filter((meetup) =>
+    [meetup.title, meetup.description, meetup.address]
+      .join(' ')
+      .toLowerCase()
+      .includes(query)
+  );
+
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -38,7 +48,17 @@ function AllMeetupsPage() {
   return (
     <section>
       <h1>All Meetups</h1>
-      <MeetupList meetups={loadedMeetups} />
+
+      <input className="search-bar" type="search" placeholder="Search by city, country or description" value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} />
+
+      {filteredMeetups.length === 0 ? (
+        <div>
+          <p>No meetups match your search :/</p>
+          <p>Try out: "Paris", "Italy" or "Kiev" for example.</p>
+        </div>
+      ) : (
+        <MeetupList meetups={filteredMeetups} />
+      )}
     </section>
   );
 }
